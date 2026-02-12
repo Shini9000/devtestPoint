@@ -1,0 +1,8 @@
+name: devtestPoint
+version: '1.0'
+main: net.shini9000.devtestPoint.DevtestPoint
+api-version: '1.21'
+load: STARTUP
+authors: [ Shini9000 ]
+description: devtest for SAOWorld
+website: https://github.com/shini9000/devtestPoint
