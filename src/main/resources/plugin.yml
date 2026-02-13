@@ -11,22 +11,18 @@ commands:
   kit:
     description: Kit command
     permission: devtest.kit
-    permission-message: You lack permission!
     usage: /<command> [Kit Name]
   points:
     description: Points command
     permission: devtest.points
-    permission-message: You lack permission!
     usage: /<command> [PlayerName]
   top:
     description: Top command
     permission: devtest.top
-    permission-message: You lack permission!
     usage: /<command> [PlayerName]
   zone:
     description: Top command
     permission: devtest.zone
-    permission-message: You lack permission!
     usage: /<command> [PlayerName]
 
 permissions:

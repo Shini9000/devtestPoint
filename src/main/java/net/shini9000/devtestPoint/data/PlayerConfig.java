@@ -28,12 +28,21 @@ public class PlayerConfig {
             this.config.set("UUID", playerUUID.toString());
             this.config.set("Currency.Points", 0);
             this.save();
+            this.reload();
         } catch (IOException e) {
             e.printStackTrace();
             Bukkit.getConsoleSender().sendMessage("Player data failed  to save " + playerName + " -- " + String.valueOf(playerUUID));
         }
 
         Bukkit.getConsoleSender().sendMessage("Player data saved " + playerName + " -- " + String.valueOf(playerUUID));
+    }
+
+    public void checkData(String playerName, UUID playerUUID) {
+        if (!this.file.exists()) {
+            createFile(playerName, playerUUID);
+            this.save();
+            this.reload();
+        }
     }
 
     public void save() {
@@ -45,6 +54,10 @@ public class PlayerConfig {
 
     }
 
+    public void reload() {
+        this.config = YamlConfiguration.loadConfiguration(this.file);
+    }
+
 
     public String getUsername() {
         return this.config.getString("Username");
@@ -54,8 +67,19 @@ public class PlayerConfig {
         return this.config.getString("UUID");
     }
 
-    public String getPoints() {
-        return this.config.getString("Currency.Points");
+    public int addPoints(int amount) {
+        int current = this.config.getInt("Currency.Points");
+        int updated = current + amount;
+
+        this.config.set("Currency.Points", updated);
+        save();
+
+        return updated;
     }
+
+    public int getPoints() {
+        return this.config.getInt("Currency.Points");
+    }
+
 
 }

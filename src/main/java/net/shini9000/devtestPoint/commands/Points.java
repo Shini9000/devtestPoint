@@ -1,13 +1,17 @@
 package net.shini9000.devtestPoint.commands;
 
 import net.shini9000.devtestPoint.DevtestPoint;
-import net.shini9000.devtestPoint.listeners.PlayerJoin;
+import net.shini9000.devtestPoint.data.PlayerConfig;
 import net.shini9000.devtestPoint.utils.ChatUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Arrays;
 
 public class Points implements CommandExecutor {
     private final DevtestPoint plugin;
@@ -17,24 +21,60 @@ public class Points implements CommandExecutor {
 
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String args, String[] strings) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        // Console handling
         if (sender instanceof ConsoleCommandSender) {
-            // check for playername
-        } else {
-            // check for args will be false anyway so return error message and return
+            if (args.length == 0) {
+                sender.sendMessage("Console must specify a player name.");
+                return true;
+            }
+
+            if (args.length == 1) {
+                OfflinePlayer target = Bukkit.getPlayerExact(args[0]);
+                if (target == null) {
+                    sender.sendMessage("Player not found.");
+                    return true;
+                } else {
+                    target.getUniqueId();
+                }
+
+                PlayerConfig pc = new PlayerConfig(plugin, target.getUniqueId());
+                sender.sendMessage(ChatUtils.getColour("&e" + target.getName() + " " + this.plugin.getConfig().getString("PlayerPoints").
+                        replace("%player_points%", String.valueOf(pc.getPoints()))));
+                return true;
+            }
             return true;
         }
 
+        // Player handling
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            // check for args
-            if (args.length() > 0) {
-                p.sendMessage("DEBUG RETURN");
+            if (!p.hasPermission("devtest.points")) {
+                p.sendMessage(ChatUtils.getColour(this.plugin.getConfig().getString("Error.Perm")));
+                return true;
             }
-            p.sendMessage("DEBUG RETURN NO ARGS");
-        } else {
+
+            if (args.length > 0) {
+                OfflinePlayer target = Bukkit.getPlayerExact(args[0]);
+                if (target == null) {
+                    p.sendMessage("Player not found.");
+                    return true;
+                } else {
+                    target.getUniqueId();
+                }
+
+                PlayerConfig pc = new PlayerConfig(plugin, target.getUniqueId());
+                p.sendMessage(ChatUtils.getColour("&e" + target.getName() + " " + this.plugin.getConfig().getString("PlayerPoints").
+                        replace("%player_points%", String.valueOf(pc.getPoints()))));
+                return true;
+            }
+
+            PlayerConfig pc = new PlayerConfig(plugin, p.getUniqueId());
+            p.sendMessage(ChatUtils.getColour(this.plugin.getConfig().getString("Points").
+                    replace("%player_points%", String.valueOf(pc.getPoints()))));
             return true;
         }
-        return false;
+
+        return true;
     }
 }

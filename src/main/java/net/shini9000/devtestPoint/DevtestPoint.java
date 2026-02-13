@@ -1,6 +1,7 @@
 package net.shini9000.devtestPoint;
 
 import net.shini9000.devtestPoint.commands.Points;
+import net.shini9000.devtestPoint.data.PlayerConfig;
 import net.shini9000.devtestPoint.listeners.PlayerJoin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -9,6 +10,9 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public final class DevtestPoint extends JavaPlugin {
     PluginDescriptionFile descriptionFile = this.getDescription();
@@ -40,5 +44,20 @@ public final class DevtestPoint extends JavaPlugin {
     public void onDisable() {
         this.getLogger().info("Plugin disabled!");
 
+    }
+
+
+    private final Map<UUID, PlayerConfig> playerData = new HashMap<>();
+
+    public PlayerConfig getPlayerConfig(UUID uuid) {
+        return playerData.get(uuid);
+    }
+
+    public void loadPlayerConfig(UUID uuid) {
+        playerData.put(uuid, new PlayerConfig(this, uuid));
+    }
+
+    public void unloadPlayerConfig(UUID uuid) {
+        playerData.remove(uuid);
     }
 }
