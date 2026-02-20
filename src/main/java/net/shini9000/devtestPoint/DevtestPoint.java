@@ -1,7 +1,9 @@
 package net.shini9000.devtestPoint;
 
+import net.shini9000.devtestPoint.commands.Kit;
 import net.shini9000.devtestPoint.commands.Points;
 import net.shini9000.devtestPoint.data.PlayerConfig;
+import net.shini9000.devtestPoint.listeners.BlockMine;
 import net.shini9000.devtestPoint.listeners.PlayerJoin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -20,9 +22,11 @@ public final class DevtestPoint extends JavaPlugin {
     @Override
     public void onEnable() {
         this.getCommand("points").setExecutor(new Points(this));
+        this.getCommand("kit").setExecutor(new Kit(this));
         //this.getCommand("top").setExecutor(new Top(this));
         //this.getCommand("zone").setExecutor(new Zone(this));
         this.getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
+        this.getServer().getPluginManager().registerEvents(new BlockMine(this), this);
 
         String[] folders = new String[]{"PlayerData"};
 

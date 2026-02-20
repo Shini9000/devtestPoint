@@ -82,4 +82,14 @@ public class PlayerConfig {
     }
 
 
+    public long getKitCooldown(String kitName) {
+        return config.getLong("Cooldowns." + kitName, 0);
+    }
+
+    public void setKitCooldown(String kitName, long time) {
+        config.set("Cooldowns." + kitName, time);
+        save();
+    }
+
+
 }

@@ -2,3 +2,10 @@ Error:
   Perm: "&cYou lack permission!"
 Points: "&eYou have &a%player_points% &epoints!"
 PlayerPoints: "&ehas &a%player_points% &epoints!"
+Kit:
+  Console: "&ehas been given the &aStarter kit&e."
+  Recieved: "&eYou have been give the &aStarter kit&e."
+
+Blocks:
+  Dirt: true
+  Stone: false

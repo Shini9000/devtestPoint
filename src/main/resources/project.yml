@@ -1,0 +1,28 @@
+"Point system"
+"Players earn points by mining blocks."
+"Use the /points command to see your score."
+"Use the /top command to see the rankings."
+# DONE ADDITION v
+Command: /point <name>
+
+"Protected areas"
+"Create an area with 2 clicks (like WorldEdit)."
+"No one can break blocks in the area."
+Command: /zone create <name>
+Command: /zone delete <name>
+
+"Starter kit"
+Command: /kit starter
+Description: gives basic tools (1x per player)
+"24-hour cooldown"
+Items: Iron pickaxe, Iron shovel, Iron axe, 64 torches
+# Done
+
+"Technical requirements"
+Version: Spigot/Paper 1.21+
+Storage: YAML file (config.yml)
+
+Permissions:
+'devtest.points' "View points"
+'devtest.zone.create' "Create zones"
+'devtest.kit' "Use kits"

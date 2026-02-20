@@ -11,8 +11,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-
 public class Points implements CommandExecutor {
     private final DevtestPoint plugin;
     public Points(DevtestPoint plugin) {
